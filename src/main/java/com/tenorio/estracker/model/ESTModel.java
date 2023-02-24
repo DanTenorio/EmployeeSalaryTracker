@@ -3,7 +3,7 @@ package com.tenorio.estracker.model;
 
 public class ESTModel
 {
-	Company company;
+	CompanyModel company;
 	
 	public ESTModel()
 	{
@@ -22,10 +22,10 @@ public class ESTModel
 	
 	public void setCompany(String companyName)
 	{
-		company = new Company(companyName);
+		company = new CompanyModel(companyName);
 	}
 
-	public Company getCompany()
+	public CompanyModel getCompany()
 	{
 		return company;
 	}

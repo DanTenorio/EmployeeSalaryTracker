@@ -4,10 +4,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Hashtable;
 
 import com.google.gson.Gson;
 
-import com.tenorio.estracker.model.Company;
+
+import com.tenorio.estracker.model.CompanyModel;
 import com.tenorio.estracker.model.ESTModel;
 import com.tenorio.estracker.model.Employee;
 
@@ -17,31 +19,20 @@ public class TestingGround {
 	
 	public static void main(String[] args)
 	{
-		Gson gson = new Gson();
+		Hashtable<Integer, Integer[]> htable = new Hashtable<>();
+		Integer[] intArray1 = new Integer[10];
+		intArray1[0] = 1;
+		intArray1[1] = 2;
+		htable.put(1, intArray1);
 		
-		ESTModel createTestModel = new ESTModel("Vega Constructions");
-		Company company = createTestModel.getCompany();
-		Employee e1 = new Employee("Fran", 20);
-		company.addEmployee(e1);
-		String json = gson.toJson(createTestModel);
-		String fileLocation = "./info/VegaConstruction.json";
-		
-		try {
-			write(json, fileLocation);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			String json2 = read(fileLocation);
-			System.out.println(json2 + "\n That was json2");
-		} catch(IOException e)
+		Integer[] intArray1C = htable.get(Integer.valueOf(1));
+		intArray1C[0] = 3;
+		for(int i = 0; i < 10; i++)
 		{
-			e.printStackTrace();
+		    System.out.println("Array 1: " + intArray1[i]);
+		    System.out.println("Array 1 Copy: " + intArray1C[i]);
 		}
-		
-		
+	
 	}
 	
 	private static void write(String json, String location) throws IOException
