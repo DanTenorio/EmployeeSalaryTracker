@@ -59,10 +59,33 @@ public class Employee
 	{
 		this.wage = wage;
 	}
-	
-	public double getWeeklyPay()
+	public double getWeeklyPay(LocalDate date)
 	{
+	    double pay = 0;
+	    switch(date.getDayOfWeek())
+	    {
+	    case MONDAY:
+
+	    case TUESDAY:
+        case WEDNESDAY:
+            break;
+        case THURSDAY:
+            break;
+        case FRIDAY:
+            break;
+        case SATURDAY:  
+            break;
+        case SUNDAY:
+            break;
+        default:
+            break;
+	    }
+	    
 	    return 0;
+	}
+	public void getOtherDayPayment(LocalDate date, int daysBefore, int daysAfter)
+	{
+	    
 	}
 	public void getMonthlyPay()
 	{
@@ -80,5 +103,13 @@ public class Employee
 	{
 	    return paymentInfos.get(Integer.valueOf(year));
 	}
-
+	public void insertPaymentInfo(int year, PaymentInfo pi, int dayOfYear)
+	{
+	    PaymentInfo[] paymentInfoArray = paymentInfos.get(year);
+	    paymentInfoArray[dayOfYear] = pi;
+	}
+	public PaymentInfo[] getPaymentInfo(int year)
+	{
+	    return paymentInfos.get(year);
+	}
 }

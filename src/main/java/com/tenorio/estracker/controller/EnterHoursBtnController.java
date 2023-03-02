@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 
 import com.tenorio.estracker.model.Employee;
 import com.tenorio.estracker.model.EnterHoursBtnModel;
+import com.tenorio.estracker.model.PaymentInfo;
+import com.tenorio.estracker.model.table.EmployeeTableModel;
 import com.tenorio.estracker.model.table.EmployeeWageTableModel;
 import com.tenorio.estracker.view.EnterHoursBtnView;
 
@@ -67,23 +69,24 @@ public class EnterHoursBtnController
             GridBagConstraints submitBtnGBC = new GridBagConstraints();
             submitBtnGBC.gridy = 1;
             submitBtnGBC.gridx = 0;
-            GridBagConstraints enterHrsBtnGBC = new GridBagConstraints();
-            enterHrsBtnGBC.gridx = 1;
-            enterHrsBtnGBC.gridy = 1;
+
             enterEmpWagesDlg.setSize(500,500);
             EmployeeWageTableModel empWageTM = new EmployeeWageTableModel(enterHrsBtnM.getEmpTableM().getEmployees());
             empWagesTable  = new JTable(empWageTM);
+            empWagesTable.setValueAt(Double.valueOf(12.12), 0, 1);
+            
+//            empWagesTable = new JTable(2, 5);
+
             JScrollPane empWagesTableSP = new JScrollPane(empWagesTable);
             //Submit Wages button should change arrayList and potentially weekly Wage field in table
             JButton submitWagesBtn = new JButton("Submit");
             //Enter Wages Button opens dialog
-            JButton enterWageBtn = new JButton("Enter Wage");
-            enterWageBtn.addActionListener(new EnterWagesListener());
+
             //Enter Button should change EmpWagesTable and employeeArraList by changing payment Info
            
             submitWagesBtn.addActionListener(new SubmitWagesListener());
             enterEmpWagesDlg.add(empWagesTableSP, tableGBC);
-            enterEmpWagesDlg.add(enterWageBtn, enterHrsBtnGBC);
+
             enterEmpWagesDlg.add(submitWagesBtn, submitBtnGBC);
             enterEmpWagesDlg.setVisible(true);
             
@@ -96,37 +99,21 @@ public class EnterHoursBtnController
             {
                 //Should submit info to employees arraylist then
                 LocalDate date = LocalDate.now();
+                
+                for(int i = 0; i < employees.size(); i++)
+                {
+                    double hours = Double.valueOf((String) empWagesTable.getValueAt(i, 1));
+                    PaymentInfo paymentInfo = new PaymentInfo(date, hours, employees.get(i).getWage());
+                    employees.get(i).insertPaymentInfo(date.getYear(), paymentInfo, date.getDayOfYear());
+                    PaymentInfo[] pis = employees.get(i).getPaymentInfo(date.getYear());
+                    System.out.println(pis[date.getDayOfYear()].getHrsWorked());
+                    EmployeeTableModel etl = enterHrsBtnM.getEmpTableM();
+                    
+                }
             }
             
         }
         
-        class EnterWagesListener implements ActionListener{
-
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                // TODO Should Create JDialog w Name and Field for Employee
-                JDialog enterWageDlg = new JDialog();
-                enterWageDlg.setSize(500, 500);
-                enterWageDlg.setLayout(new GridBagLayout());
-                GridBagConstraints nameLGBC = new GridBagConstraints();
-                GridBagConstraints wageTFGBC = new GridBagConstraints();
-                wageTFGBC.gridx = 1;
-                GridBagConstraints submitBtnGBC = new GridBagConstraints();
-                submitBtnGBC.gridy = 1;
-                JLabel nameLabel = new JLabel((String)empWagesTable.getValueAt(empWagesTable.getSelectedRow(), 0));
-                JTextField wageTextField = new JTextField((String)empWagesTable.getValueAt(empWagesTable.getSelectedRow(), 1), 15);
-                //submit Button should change EmpWagesTable and employeeArraList by changing payment Info
-                JButton submitButton = new JButton("Submit");
-                
-                enterWageDlg.add(nameLabel, nameLGBC);
-                enterWageDlg.add(wageTextField, wageTFGBC);
-                enterWageDlg.add(submitButton, submitBtnGBC);
-                enterWageDlg.setVisible(true);
-                
-            }
-            
-        }
     }
 
 }

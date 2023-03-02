@@ -10,14 +10,15 @@ public class PaymentInfo
     private double hrsWorked;
     private double wage;
 
-    public PaymentInfo(LocalDate date, double hrsWorked)
+    public PaymentInfo(LocalDate date, double hrsWorked, double wage)
     {
         this.setLocalDate(date);
         this.setHrsWorked(hrsWorked);
+        this.setWage(wage);
     }
-    public PaymentInfo(double hrsWorked)
+    public PaymentInfo(double hrsWorked, double wage)
     {
-       this(LocalDate.now(), hrsWorked);
+       this(LocalDate.now(), hrsWorked, wage);
     }
     public double getHrsWorked()
     {

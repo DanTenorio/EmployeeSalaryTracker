@@ -1,5 +1,6 @@
 package com.tenorio.estracker.model.table;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
@@ -42,7 +43,7 @@ public class EmployeeTableModel extends AbstractTableModel {
 			value += emp.getWage();
 			break;
 		case 2:
-			value += emp.getWeeklyPay();
+			value += emp.getWeeklyPay(LocalDate.now());
 		}
 		
 		return value;
@@ -64,6 +65,12 @@ public class EmployeeTableModel extends AbstractTableModel {
 	{
 	    employees.remove(rowIndex);
 	    fireTableRowsDeleted(rowIndex, rowIndex);
+	}
+	
+	public void paymentInfoChange(int rowindex)
+	{
+	    Employee emp = employees.get(rowindex);
+	    
 	}
 	
 	public ArrayList<Employee> getEmployees()
