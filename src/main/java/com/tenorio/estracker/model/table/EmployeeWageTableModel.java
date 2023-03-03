@@ -9,7 +9,7 @@ import com.tenorio.estracker.model.Employee;
 public class EmployeeWageTableModel extends AbstractTableModel
 {
     private ArrayList<Employee> employees;
-    private ArrayList<Double> employeeWages;
+    private ArrayList<Double> employeeHrsWorked;
     /**
      * 
      */
@@ -17,10 +17,10 @@ public class EmployeeWageTableModel extends AbstractTableModel
     public EmployeeWageTableModel(ArrayList<Employee> employees)
     {
         this.employees = employees;
-        this.employeeWages = new ArrayList<>();
+        this.employeeHrsWorked = new ArrayList<>();
         for(int i = 0; i < employees.size(); i++)
         {
-            employeeWages.add(Double.valueOf(0.0));
+            employeeHrsWorked.add(Double.valueOf(0.0));
         }
     }
     
@@ -43,10 +43,8 @@ public class EmployeeWageTableModel extends AbstractTableModel
         if(columnIndex == 0)
         {
             return employees.get(rowIndex).getName();
-        } else if(employeeWages.get(rowIndex) != null ){
-            return employeeWages.get(rowIndex);
         }else {
-            return employeeWages.get(rowIndex);
+            return employeeHrsWorked.get(rowIndex);
         }
     }
     
@@ -59,14 +57,15 @@ public class EmployeeWageTableModel extends AbstractTableModel
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         String val = aValue.toString();
-        employeeWages.set(rowIndex, Double.valueOf(val));
+        employeeHrsWorked.set(rowIndex, Double.valueOf(val));
         fireTableCellUpdated(rowIndex, columnIndex);
     }
     
-    public void setValueAt(Double value, int row, int col)
+    
+    public ArrayList<Double> getEmpHrsWorked()
     {
-        employeeWages.set(row, value);
-        fireTableCellUpdated(row, col);
+        return employeeHrsWorked;
     }
+    
 
 }

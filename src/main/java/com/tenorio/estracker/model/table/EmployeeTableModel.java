@@ -43,7 +43,8 @@ public class EmployeeTableModel extends AbstractTableModel {
 			value += emp.getWage();
 			break;
 		case 2:
-			value += emp.getWeeklyPay(LocalDate.now());
+		    System.out.println("Weekly Pay for emp: " + emp.getWeeklyPay(LocalDate.now()));
+			value += ""  + emp.getWeeklyPay(LocalDate.now());
 		}
 		
 		return value;
@@ -68,9 +69,8 @@ public class EmployeeTableModel extends AbstractTableModel {
 	}
 	
 	public void paymentInfoChange(int rowindex)
-	{
-	    Employee emp = employees.get(rowindex);
-	    
+	{  
+	    fireTableRowsUpdated(rowindex, rowindex);;
 	}
 	
 	public ArrayList<Employee> getEmployees()

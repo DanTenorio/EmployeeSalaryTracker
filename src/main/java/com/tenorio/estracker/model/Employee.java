@@ -38,6 +38,7 @@ public class Employee
 		this.name = name;
 		this.wage = wage;
 		paymentInfos = new Hashtable<>();
+		paymentInfos.put(Integer.valueOf(LocalDate.now().getYear()), new PaymentInfo[366]);
 	}
 
 	public String getName() 
@@ -62,31 +63,64 @@ public class Employee
 	public double getWeeklyPay(LocalDate date)
 	{
 	    double pay = 0;
+	    PaymentInfo[] pi = paymentInfos.get(Integer.valueOf(date.getYear()));
+	    if(pi[date.getDayOfYear()] != null) {
+	        pay += pi[date.getDayOfYear()].getPayment();
+	    }
 	    switch(date.getDayOfWeek())
 	    {
 	    case MONDAY:
-
+	        pay += getOtherDayPayments(date, 0, 6);
+	        break;
 	    case TUESDAY:
+	        pay += getOtherDayPayments(date, 1, 5);
+	        break;
         case WEDNESDAY:
+            pay += getOtherDayPayments(date, 2, 4);
             break;
         case THURSDAY:
+            pay += getOtherDayPayments(date, 3, 3);
             break;
         case FRIDAY:
+            pay += getOtherDayPayments(date, 4, 2);
             break;
-        case SATURDAY:  
+        case SATURDAY:
+            pay += getOtherDayPayments(date, 5, 1);
             break;
         case SUNDAY:
+            pay += getOtherDayPayments(date, 6, 0);
             break;
         default:
             break;
 	    }
 	    
-	    return 0;
+	    return pay;
 	}
-	public void getOtherDayPayment(LocalDate date, int daysBefore, int daysAfter)
+	public double getOtherDayPayments(LocalDate date, int daysBefore, int daysAfter)
 	{
-	    
+	    double total = 0;
+	    PaymentInfo[] pi = getPaymentInfos(date.getYear());
+
+	    for(int i = 0; i < daysBefore; i++)
+	    {
+	        LocalDate checkDate = date.minusDays(i + 1);
+	        if(pi[checkDate.getDayOfYear()] != null)
+	        {
+	            total += pi[checkDate.getDayOfYear()].getWage();
+	        } 
+	    }
+	    for(int i = 0; i< daysAfter; i++)
+	    {
+	        LocalDate checkDate = date.plusDays(i + 1);
+	        if(pi[checkDate.getDayOfYear()] != null) 
+	        {
+	            total += pi[checkDate.getDayOfYear()].getWage();
+	        }
+	        
+	    }
+	    return total;
 	}
+	
 	public void getMonthlyPay()
 	{
 	    
@@ -99,15 +133,18 @@ public class Employee
 	{
 	    
 	}
+	
 	public PaymentInfo[] getPaymentInfos(int year)
 	{
 	    return paymentInfos.get(Integer.valueOf(year));
 	}
+	
 	public void insertPaymentInfo(int year, PaymentInfo pi, int dayOfYear)
 	{
 	    PaymentInfo[] paymentInfoArray = paymentInfos.get(year);
 	    paymentInfoArray[dayOfYear] = pi;
 	}
+	
 	public PaymentInfo[] getPaymentInfo(int year)
 	{
 	    return paymentInfos.get(year);

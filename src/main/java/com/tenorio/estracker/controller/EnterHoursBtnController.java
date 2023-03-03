@@ -59,11 +59,13 @@ public class EnterHoursBtnController
     class EnterHoursListener implements ActionListener{
 
         JTable empWagesTable;
+        EmployeeWageTableModel empWageTM;
+        JDialog enterEmpWagesDlg;
         @Override
         public void actionPerformed(ActionEvent e)
         {
             // TODO Create a Dialog with a table of employee names and a blank field for employee
-            JDialog enterEmpWagesDlg = new JDialog();
+            enterEmpWagesDlg = new JDialog();
             enterEmpWagesDlg.setLayout(new GridBagLayout());
             GridBagConstraints tableGBC = new GridBagConstraints();
             GridBagConstraints submitBtnGBC = new GridBagConstraints();
@@ -71,9 +73,8 @@ public class EnterHoursBtnController
             submitBtnGBC.gridx = 0;
 
             enterEmpWagesDlg.setSize(500,500);
-            EmployeeWageTableModel empWageTM = new EmployeeWageTableModel(enterHrsBtnM.getEmpTableM().getEmployees());
+            empWageTM = new EmployeeWageTableModel(enterHrsBtnM.getEmpTableM().getEmployees());
             empWagesTable  = new JTable(empWageTM);
-            empWagesTable.setValueAt(Double.valueOf(12.12), 0, 1);
             
 //            empWagesTable = new JTable(2, 5);
 
@@ -92,26 +93,31 @@ public class EnterHoursBtnController
             
         }
         
+        /**
+         * @author Daniel Tenorio
+         * This Listener should implement changes to the company view table by inserting payment Info then calculating the weekly wage
+         *
+         */
         class SubmitWagesListener implements ActionListener{
 
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //Should submit info to employees arraylist then
+                //Create and insert payment info and calculate weekly pay for each Employee
                 LocalDate date = LocalDate.now();
                 
                 for(int i = 0; i < employees.size(); i++)
                 {
-                    double hours = Double.valueOf((String) empWagesTable.getValueAt(i, 1));
-                    PaymentInfo paymentInfo = new PaymentInfo(date, hours, employees.get(i).getWage());
-                    employees.get(i).insertPaymentInfo(date.getYear(), paymentInfo, date.getDayOfYear());
-                    PaymentInfo[] pis = employees.get(i).getPaymentInfo(date.getYear());
-                    System.out.println(pis[date.getDayOfYear()].getHrsWorked());
-                    EmployeeTableModel etl = enterHrsBtnM.getEmpTableM();
-                    
+                   PaymentInfo pi = new PaymentInfo(date, empWageTM.getEmpHrsWorked().get(i), employees.get(i).getWage());
+                   Employee emp = employees.get(i);
+                   emp.insertPaymentInfo(date.getYear(), pi, date.getDayOfYear());
+                   enterHrsBtnM.getEmpTableM().paymentInfoChange(i);
+                   
                 }
+                enterEmpWagesDlg.dispose();
             }
             
+
         }
         
     }
