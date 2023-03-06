@@ -48,13 +48,7 @@ public class App
 				        UIManager.put("swing.boldMetal", Boolean.FALSE);
 				        try {
 							createAndShowGUI();
-						} catch (JsonSyntaxException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (JsonIOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (FileNotFoundException e) {
+						}  catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}

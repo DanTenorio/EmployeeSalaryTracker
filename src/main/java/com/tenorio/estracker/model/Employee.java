@@ -121,17 +121,46 @@ public class Employee
 	    return total;
 	}
 	
-	public void getMonthlyPay()
+	
+	public double getMonthlyPay()
 	{
+	    double pay = 0;
 	    
+	    LocalDate date = LocalDate.now();
+	    PaymentInfo[] pis = paymentInfos.get(Integer.valueOf(date.getYear()));
+	    int dayOfMonth = date.getDayOfMonth();
+	    int curDay = dayOfMonth;
+	    
+	    //Checks days before the current Day
+	    for(int i = 1; i < curDay; i++)
+	    {
+	        LocalDate checkDate = date.minusDays(i);
+	        PaymentInfo pi = pis[checkDate.getDayOfYear()];
+	        if(pi != null)
+	        {
+	            pay += pi.getPayment();
+	        }
+	    }
+	    //Checks days after current day
+	    LocalDate checkDate = date;
+	   while(curDay != 1)
+	   {
+	       checkDate.getDayOfMonth();
+	   }
+	    
+	    return pay;
 	}
-	public void getQuarterPay()
+	public double getQuarterPay()
 	{
+	    double pay = 0;
 	    
+	    return pay;
 	}
-	public void getYearlyPay()
+	public double getYearlyPay()
 	{
+	    double pay = 0;
 	    
+	    return pay;
 	}
 	
 	public PaymentInfo[] getPaymentInfos(int year)

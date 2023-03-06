@@ -4,9 +4,17 @@ import com.tenorio.estracker.model.table.EmployeeTableModel;
 
 public class ReportBtnModel
 {
-    EmployeeTableModel empTableM;
+    private EmployeeTableModel empTableM;
     public ReportBtnModel(EmployeeTableModel etl)
     {
-        empTableM = etl;
+        setEmpTableM(etl);
+    }
+    public EmployeeTableModel getEmpTableM()
+    {
+        return empTableM;
+    }
+    public void setEmpTableM(EmployeeTableModel empTableM)
+    {
+        this.empTableM = empTableM;
     }
 }
