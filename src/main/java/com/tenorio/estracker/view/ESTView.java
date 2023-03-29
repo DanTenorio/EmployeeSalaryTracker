@@ -1,18 +1,12 @@
 package com.tenorio.estracker.view;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-
 import com.tenorio.estracker.controller.*;
 import com.tenorio.estracker.model.*;
-import com.tenorio.estracker.model.table.EmployeeTableModel;
 
 public class ESTView extends JFrame
 {
@@ -20,7 +14,6 @@ public class ESTView extends JFrame
      * 
      */
     private static final long serialVersionUID = -1899009042922694604L;
-    private EmployeeTableModel etl;
     CompanyModel company;
     ArrayList<Employee> employees;
 

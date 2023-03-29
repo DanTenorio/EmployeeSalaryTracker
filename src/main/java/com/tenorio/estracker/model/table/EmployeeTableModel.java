@@ -43,7 +43,6 @@ public class EmployeeTableModel extends AbstractTableModel {
 			value += emp.getWage();
 			break;
 		case 2:
-		    System.out.println("Weekly Pay for emp: " + emp.getWeeklyPay(LocalDate.now()));
 			value += ""  + emp.getWeeklyPay(LocalDate.now());
 		}
 		

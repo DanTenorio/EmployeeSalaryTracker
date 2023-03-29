@@ -9,15 +9,11 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-
 import com.tenorio.estracker.model.Employee;
 import com.tenorio.estracker.model.EnterHoursBtnModel;
 import com.tenorio.estracker.model.PaymentInfo;
-import com.tenorio.estracker.model.table.EmployeeTableModel;
 import com.tenorio.estracker.model.table.EmployeeWageTableModel;
 import com.tenorio.estracker.view.EnterHoursBtnView;
 

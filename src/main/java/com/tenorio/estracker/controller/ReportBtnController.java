@@ -1,5 +1,7 @@
 package com.tenorio.estracker.controller;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -59,17 +61,43 @@ public class ReportBtnController
                 Employee emp = emps.get(i);
                 
                 mnthExpense += EmployeeUtil.getMonthlyExpense(emp, LocalDate.now());
-                qrtrExpense += emp.getQuarterPay();
-                yrExpense += emp.getYearlyPay();
+                qrtrExpense += EmployeeUtil.getQuarterlyExpense(emp, LocalDate.now());
+                yrExpense += EmployeeUtil.getYearlyExpense(emp, LocalDate.now());
             }
             reportDlg = new JDialog();
             JLabel monthlyExpense = new JLabel("Monthly Expense "  + mnthExpense);
             JLabel quarterlyExpense = new JLabel("Quarterly Expense" + qrtrExpense);
             JLabel yearlyExpense = new JLabel("Yearly Expense" + yrExpense);
+            reportDlg.setLayout(new GridBagLayout());
+            reportDlg.add(monthlyExpense, getMonthlyExpenseGBC());
+            reportDlg.add(quarterlyExpense, getQuarterlyExpenseGBC());
+            reportDlg.add(yearlyExpense, getYearlyExpenseGBC());
             
-                       
+            reportDlg.pack();
             reportDlg.setVisible(true);
             
+        }
+        
+        private GridBagConstraints getMonthlyExpenseGBC() 
+        {
+            GridBagConstraints GBC = new GridBagConstraints();
+            GBC.fill = GridBagConstraints.HORIZONTAL;
+            return GBC;
+        }
+        
+        private GridBagConstraints getQuarterlyExpenseGBC()
+        {
+            GridBagConstraints GBC = new GridBagConstraints();
+            GBC.fill = GridBagConstraints.HORIZONTAL;
+            GBC.gridy = 1;
+            return GBC;
+        }
+        private GridBagConstraints getYearlyExpenseGBC()
+        {
+            GridBagConstraints GBC = new GridBagConstraints();
+            GBC.fill = GridBagConstraints.HORIZONTAL;
+            GBC.gridy = 2;
+            return GBC;
         }
         
     }
